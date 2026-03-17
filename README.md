@@ -1,6 +1,6 @@
-# IR Bridge for WeMos D1 mini
+# ESP Transciever IR
 
-IR Bridge es un transceptor infrarrojo con interfaz web para aprender comandos IR, guardarlos en memoria, crear mapeos simples, definir secuencias y ejecutar acciones automáticas al arrancar. El proyecto está orientado a `ESP8266` con `WeMos D1 mini` y usa `LittleFS` como almacenamiento persistente.
+ESP Transciever IR es un transceptor infrarrojo con interfaz web para aprender comandos IR, guardarlos en memoria, crear mapeos simples, definir secuencias y ejecutar acciones automáticas al arrancar. El proyecto está orientado a `ESP8266` con `WeMos D1 mini` y usa `LittleFS` como almacenamiento persistente.
 
 Versión actual del proyecto: `0.8.2`
 
