@@ -121,6 +121,9 @@ const translations = {
     timeoutRange: "Timeout must be 100-5000 ms",
     maxSteps: "Max 8 steps",
     noSourceSelected: "No source selected",
+    mappingTargetRequired: "No target selected",
+    mappingDifferentCommands: "Source and target must be different",
+    mappingCommandsUnavailable: "Commands are not loaded yet",
     startupConfigured: "Startup: {value}",
     startupDisabled: "Disabled",
     startupPending: "Pending",
@@ -256,6 +259,9 @@ const translations = {
     timeoutRange: "El timeout debe estar entre 100 y 5000 ms",
     maxSteps: "Maximo 8 pasos",
     noSourceSelected: "No hay origen seleccionado",
+    mappingTargetRequired: "No hay destino seleccionado",
+    mappingDifferentCommands: "Origen y destino deben ser distintos",
+    mappingCommandsUnavailable: "Los comandos todavia no estan cargados",
     startupConfigured: "Arranque: {value}",
     startupDisabled: "Desactivado",
     startupPending: "Pendiente",
@@ -391,6 +397,9 @@ const translations = {
     timeoutRange: "Timeout musi byc miedzy 100 a 5000 ms",
     maxSteps: "Maksymalnie 8 krokow",
     noSourceSelected: "Nie wybrano zrodla",
+    mappingTargetRequired: "Nie wybrano celu",
+    mappingDifferentCommands: "Zrodlo i cel musza byc rozne",
+    mappingCommandsUnavailable: "Komendy nie sa jeszcze zaladowane",
     startupConfigured: "Start: {value}",
     startupDisabled: "Wylaczone",
     startupPending: "Oczekuje",
@@ -838,6 +847,20 @@ function renderSequenceDraft() {
   `;
 }
 
+function updateMappingFormState() {
+  if (!$("mapBtn") || !$("mapSource") || !$("mapTarget")) return;
+
+  const source = $("mapSource").value;
+  const target = $("mapTarget").value;
+  const valid = !!source &&
+    !!target &&
+    source !== target &&
+    !!state.commands[source] &&
+    !!state.commands[target];
+
+  $("mapBtn").disabled = !valid;
+}
+
 function renderCommands() {
   if (!$("commandsList")) return;
 
@@ -852,6 +875,7 @@ function renderCommands() {
 
   if (!names.length) {
     $("commandsList").innerHTML = `<div class="command-card empty-card">${escapeHtml(t("noCommandsStored"))}</div>`;
+    updateMappingFormState();
     renderSequenceDraft();
     return;
   }
@@ -864,7 +888,12 @@ function renderCommands() {
     $("sequenceTarget").add(new Option(name, name));
   }
 
+  if (names.length > 1 && $("mapSource").value === $("mapTarget").value) {
+    $("mapTarget").value = names[1];
+  }
+
   renderStartupTargets();
+  updateMappingFormState();
 
   $("commandsList").innerHTML = names.map(name => {
     const command = state.commands[name];
@@ -1200,22 +1229,53 @@ async function ensureCommandsData(force = false) {
 }
 
 async function ensureMappingsData(force = false) {
-  await ensureCommandsData(force);
   if (force) {
+    state.loaded.commands = false;
     state.loaded.mappings = false;
   }
-  if (!state.loaded.mappings) {
-    await loadMappings();
+
+  const tasks = [];
+  if (!state.loaded.commands) {
+    tasks.push(loadCommandSummaries());
   }
+  if (!state.loaded.mappings) {
+    tasks.push(loadMappings());
+  }
+
+  if (!tasks.length) {
+    updateMappingFormState();
+    return;
+  }
+
+  const results = await Promise.allSettled(tasks);
+  if (results.every(result => result.status === "rejected")) {
+    throw results[0].reason;
+  }
+
+  updateMappingFormState();
 }
 
 async function ensureSequencesData(force = false) {
-  await ensureCommandsData(force);
   if (force) {
+    state.loaded.commands = false;
     state.loaded.sequences = false;
   }
+
+  const tasks = [];
+  if (!state.loaded.commands) {
+    tasks.push(loadCommandSummaries());
+  }
   if (!state.loaded.sequences) {
-    await loadSequences();
+    tasks.push(loadSequences());
+  }
+
+  if (!tasks.length) {
+    return;
+  }
+
+  const results = await Promise.allSettled(tasks);
+  if (results.every(result => result.status === "rejected")) {
+    throw results[0].reason;
   }
 }
 
@@ -1243,23 +1303,36 @@ async function ensureDashboardData(force = false) {
 }
 
 async function refreshVisibleData(force = false) {
+  let firstError = null;
   try {
     await loadUiState();
   } catch (error) {
-    await loadEssentialStateFallback();
+    try {
+      await loadEssentialStateFallback();
+    } catch (fallbackError) {
+      firstError = fallbackError || error;
+    }
   }
 
   const activeTab = getActiveTab();
-  if (activeTab === "commands") {
-    await ensureCommandsData(force);
-  } else if (activeTab === "mappings") {
-    await ensureMappingsData(force);
-  } else if (activeTab === "sequences") {
-    await ensureSequencesData(force);
-  } else if (activeTab === "settings") {
-    await ensureSettingsData(force);
-  } else {
-    await ensureDashboardData(force);
+  try {
+    if (activeTab === "commands") {
+      await ensureCommandsData(force);
+    } else if (activeTab === "mappings") {
+      await ensureMappingsData(force);
+    } else if (activeTab === "sequences") {
+      await ensureSequencesData(force);
+    } else if (activeTab === "settings") {
+      await ensureSettingsData(force);
+    } else {
+      await ensureDashboardData(force);
+    }
+  } catch (error) {
+    firstError = firstError || error;
+  }
+
+  if (firstError) {
+    throw firstError;
   }
 }
 
@@ -1380,6 +1453,14 @@ async function renameCommand(name, button) {
 async function createMapping(button) {
   const source = $("mapSource").value;
   const target = $("mapTarget").value;
+
+  if (!source) throw new Error(t("noSourceSelected"));
+  if (!target) throw new Error(t("mappingTargetRequired"));
+  if (source === target) throw new Error(t("mappingDifferentCommands"));
+  if (!state.commands[source] || !state.commands[target]) {
+    throw new Error(t("mappingCommandsUnavailable"));
+  }
+
   try {
     setBusy(button, true);
     const message = await api("/api/map", {
@@ -1683,6 +1764,8 @@ function bindEvents() {
   $("refreshBtn").addEventListener("click", () => refreshVisibleData(true).catch(err => showToast(err.message)));
   $("recordBtn").addEventListener("click", event => startRecording(event.currentTarget).catch(err => showToast(err.message)));
   $("mapBtn").addEventListener("click", event => createMapping(event.currentTarget).catch(err => showToast(err.message)));
+  $("mapSource").addEventListener("change", updateMappingFormState);
+  $("mapTarget").addEventListener("change", updateMappingFormState);
   $("netMode").addEventListener("change", toggleNetworkFields);
   $("netSaveBtn").addEventListener("click", event => saveNetwork(event.currentTarget).catch(err => showToast(err.message)));
   $("languageSaveBtn").addEventListener("click", event => saveLanguage(event.currentTarget).catch(err => showToast(err.message)));
