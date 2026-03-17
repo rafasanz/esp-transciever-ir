@@ -153,7 +153,7 @@ bool CommandManager::begin() {
     if (!_storage.load(_doc)) {
         Logger::log(I18n::pick(
             "No existing JSON. Creating new file.",
-            "No existia JSON. Se crea un archivo nuevo.",
+            "No existía JSON. Se crea un archivo nuevo.",
             "Brak pliku JSON. Tworze nowy plik."
         ));
         _doc.clear();
@@ -180,7 +180,7 @@ bool CommandManager::begin() {
 
 bool CommandManager::saveCommand(const IRCommandData& command) {
     if (!isValidName(command.name)) {
-        Logger::log(I18n::pick("Invalid command name.", "Nombre de comando invalido.", "Nieprawidlowa nazwa komendy."));
+        Logger::log(I18n::pick("Invalid command name.", "Nombre de comando inválido.", "Nieprawidlowa nazwa komendy."));
         return false;
     }
 
@@ -194,7 +194,7 @@ bool CommandManager::saveCommand(const IRCommandData& command) {
     }
 
     if (command.bits == 0 && !command.hasRaw) {
-        Logger::log(I18n::pick("Invalid command payload.", "Payload de comando invalido.", "Nieprawidlowy ladunek komendy."));
+        Logger::log(I18n::pick("Invalid command payload.", "Payload de comando inválido.", "Nieprawidlowy ladunek komendy."));
         return false;
     }
 
@@ -362,7 +362,7 @@ bool CommandManager::addSequence(const String& name,
                                  bool enabled) {
     if (!isValidName(name) || !hasCommand(target) || timeoutMs < 100 || timeoutMs > 5000 ||
         steps.size() < 2 || steps.size() > 8) {
-        Logger::log(I18n::pick("Sequence rejected: invalid payload.", "Secuencia rechazada: payload invalido.", "Sekwencja odrzucona: nieprawidlowy ladunek."));
+        Logger::log(I18n::pick("Sequence rejected: invalid payload.", "Secuencia rechazada: payload inválido.", "Sekwencja odrzucona: nieprawidlowy ladunek."));
         return false;
     }
 
@@ -371,7 +371,7 @@ bool CommandManager::addSequence(const String& name,
     JsonArray outSteps = sequence["steps"].to<JsonArray>();
     for (JsonVariantConst step : steps) {
         if (!step.is<const char*>()) {
-            Logger::log(I18n::pick("Sequence rejected: invalid step.", "Secuencia rechazada: paso invalido.", "Sekwencja odrzucona: nieprawidlowy krok."));
+            Logger::log(I18n::pick("Sequence rejected: invalid step.", "Secuencia rechazada: paso inválido.", "Sekwencja odrzucona: nieprawidlowy krok."));
             return false;
         }
         const String stepName = step.as<String>();
@@ -705,7 +705,7 @@ bool CommandManager::removeMapping(const String& source) {
 
 bool CommandManager::setLanguage(const String& language) {
     if (!I18n::setLanguage(language)) {
-        Logger::log(I18n::pick("Invalid language.", "Idioma invalido.", "Nieprawidlowy jezyk."));
+        Logger::log(I18n::pick("Invalid language.", "Idioma inválido.", "Nieprawidlowy jezyk."));
         return false;
     }
 
@@ -738,7 +738,7 @@ bool CommandManager::setStartupAction(const StartupActionConfig& config) {
     startup["delay_ms"] = config.delayMs;
 
     if (!isValidStartupAction(startup)) {
-        Logger::log(I18n::pick("Invalid startup action.", "Accion de arranque invalida.", "Nieprawidlowa akcja startowa."));
+        Logger::log(I18n::pick("Invalid startup action.", "Acción de arranque inválida.", "Nieprawidlowa akcja startowa."));
         return false;
     }
 
@@ -788,13 +788,13 @@ bool CommandManager::setNetworkConfig(const String& mode,
                                       const String& gateway,
                                       const String& subnet) {
     if (mode != "dhcp" && mode != "static") {
-        Logger::log(I18n::pick("Invalid network mode.", "Modo de red invalido.", "Nieprawidlowy tryb sieci."));
+        Logger::log(I18n::pick("Invalid network mode.", "Modo de red inválido.", "Nieprawidlowy tryb sieci."));
         return false;
     }
 
     if (mode == "static" &&
         (ip.length() == 0 || gateway.length() == 0 || subnet.length() == 0)) {
-        Logger::log(I18n::pick("Static network config incomplete.", "Configuracion de red estatica incompleta.", "Niepelna statyczna konfiguracja sieci."));
+        Logger::log(I18n::pick("Static network config incomplete.", "Configuración de red estática incompleta.", "Niepelna statyczna konfiguracja sieci."));
         return false;
     }
 
@@ -834,19 +834,19 @@ void CommandManager::getDeviceState(JsonDocument& doc) {
 
 bool CommandManager::importConfig(JsonDocument& doc) {
     if (!doc["commands"].is<JsonObject>() || !doc["mappings"].is<JsonObject>()) {
-        Logger::log(I18n::pick("Import rejected: invalid schema.", "Importacion rechazada: esquema invalido.", "Import odrzucony: nieprawidlowy schemat."));
+        Logger::log(I18n::pick("Import rejected: invalid schema.", "Importación rechazada: esquema inválido.", "Import odrzucony: nieprawidlowy schemat."));
         return false;
     }
 
     if (doc["network"].is<JsonObjectConst>() &&
         !isValidNetworkConfig(doc["network"].as<JsonObjectConst>())) {
-        Logger::log(I18n::pick("Import rejected: invalid network config.", "Importacion rechazada: configuracion de red invalida.", "Import odrzucony: nieprawidlowa konfiguracja sieci."));
+        Logger::log(I18n::pick("Import rejected: invalid network config.", "Importación rechazada: configuración de red inválida.", "Import odrzucony: nieprawidlowa konfiguracja sieci."));
         return false;
     }
 
     if (doc["device"].is<JsonObjectConst>() &&
         !isValidDeviceState(doc["device"].as<JsonObjectConst>())) {
-        Logger::log(I18n::pick("Import rejected: invalid device state.", "Importacion rechazada: estado de dispositivo invalido.", "Import odrzucony: nieprawidlowy stan urzadzenia."));
+        Logger::log(I18n::pick("Import rejected: invalid device state.", "Importación rechazada: estado de dispositivo inválido.", "Import odrzucony: nieprawidlowy stan urzadzenia."));
         return false;
     }
 
@@ -862,7 +862,7 @@ void CommandManager::exportConfig(JsonDocument& doc) const {
 
 bool CommandManager::importCommandsAndMappings(JsonDocument& doc) {
     if (!doc["commands"].is<JsonObject>() || !doc["mappings"].is<JsonObject>()) {
-        Logger::log(I18n::pick("Import rejected: invalid commands/mappings schema.", "Importacion rechazada: esquema invalido de comandos o mapeos.", "Import odrzucony: nieprawidlowy schemat komend lub mapowan."));
+        Logger::log(I18n::pick("Import rejected: invalid commands/mappings schema.", "Importación rechazada: esquema inválido de comandos o mapeos.", "Import odrzucony: nieprawidlowy schemat komend lub mapowan."));
         return false;
     }
 
@@ -878,7 +878,7 @@ bool CommandManager::importCommandsAndMappingsJson(const String& json) {
         !incoming["commands"].is<JsonObjectConst>() ||
         !incoming["mappings"].is<JsonObjectConst>() ||
         !incoming["sequences"].is<JsonObjectConst>()) {
-        Logger::log(I18n::pick("Import rejected: invalid commands/mappings/sequences payload.", "Importacion rechazada: payload invalido de comandos, mapeos o secuencias.", "Import odrzucony: nieprawidlowy ladunek komend, mapowan lub sekwencji."));
+        Logger::log(I18n::pick("Import rejected: invalid commands/mappings/sequences payload.", "Importación rechazada: payload inválido de comandos, mapeos o secuencias.", "Import odrzucony: nieprawidlowy ladunek komend, mapowan lub sekwencji."));
         return false;
     }
 
@@ -902,14 +902,14 @@ bool CommandManager::importCommandsAndMappingsJson(const String& json) {
     for (JsonPairConst kv : incoming["commands"].as<JsonObjectConst>()) {
         IRCommandData command;
         if (!commandFromJson(String(kv.key().c_str()), kv.value(), command)) {
-            Logger::log(String(I18n::pick("Import rejected: invalid command ", "Importacion rechazada: comando invalido ", "Import odrzucony: nieprawidlowa komenda ")) + String(kv.key().c_str()));
+            Logger::log(String(I18n::pick("Import rejected: invalid command ", "Importación rechazada: comando inválido ", "Import odrzucony: nieprawidlowa komenda ")) + String(kv.key().c_str()));
             return false;
         }
     }
 
     for (JsonPairConst kv : incoming["mappings"].as<JsonObjectConst>()) {
         if (!kv.value().is<const char*>()) {
-            Logger::log(I18n::pick("Import rejected: invalid mapping target.", "Importacion rechazada: destino de mapeo invalido.", "Import odrzucony: nieprawidlowy cel mapowania."));
+            Logger::log(I18n::pick("Import rejected: invalid mapping target.", "Importación rechazada: destino de mapeo inválido.", "Import odrzucony: nieprawidlowy cel mapowania."));
             return false;
         }
 
@@ -918,7 +918,7 @@ bool CommandManager::importCommandsAndMappingsJson(const String& json) {
         if (source.length() == 0 || target.length() == 0 || source == target ||
             !incoming["commands"][source].is<JsonObjectConst>() ||
             !incoming["commands"][target].is<JsonObjectConst>()) {
-            Logger::log(String(I18n::pick("Import rejected: dangling mapping ", "Importacion rechazada: mapeo colgante ", "Import odrzucony: wiszace mapowanie ")) + source + " -> " + target);
+            Logger::log(String(I18n::pick("Import rejected: dangling mapping ", "Importación rechazada: mapeo colgante ", "Import odrzucony: wiszace mapowanie ")) + source + " -> " + target);
             return false;
         }
     }
@@ -926,18 +926,18 @@ bool CommandManager::importCommandsAndMappingsJson(const String& json) {
     for (JsonPairConst kv : incoming["sequences"].as<JsonObjectConst>()) {
         JsonObjectConst sequence = kv.value().as<JsonObjectConst>();
         if (!isValidSequence(sequence)) {
-            Logger::log(String(I18n::pick("Import rejected: invalid sequence ", "Importacion rechazada: secuencia invalida ", "Import odrzucony: nieprawidlowa sekwencja ")) + String(kv.key().c_str()));
+            Logger::log(String(I18n::pick("Import rejected: invalid sequence ", "Importación rechazada: secuencia inválida ", "Import odrzucony: nieprawidlowa sekwencja ")) + String(kv.key().c_str()));
             return false;
         }
 
         if (!hasCommand(sequence["target"].as<String>()) && incoming["commands"][sequence["target"].as<String>()].isNull()) {
-            Logger::log(I18n::pick("Import rejected: sequence target missing.", "Importacion rechazada: falta el objetivo de la secuencia.", "Import odrzucony: brak celu sekwencji."));
+            Logger::log(I18n::pick("Import rejected: sequence target missing.", "Importación rechazada: falta el objetivo de la secuencia.", "Import odrzucony: brak celu sekwencji."));
             return false;
         }
 
         for (JsonVariantConst step : sequence["steps"].as<JsonArrayConst>()) {
             if (incoming["commands"][step.as<String>()].isNull()) {
-                Logger::log(I18n::pick("Import rejected: sequence step missing.", "Importacion rechazada: falta un paso de la secuencia.", "Import odrzucony: brakuje kroku sekwencji."));
+                Logger::log(I18n::pick("Import rejected: sequence step missing.", "Importación rechazada: falta un paso de la secuencia.", "Import odrzucony: brakuje kroku sekwencji."));
                 return false;
             }
         }
@@ -946,7 +946,7 @@ bool CommandManager::importCommandsAndMappingsJson(const String& json) {
     StartupActionConfig importedStartup = currentStartup;
     if (incoming["startup"].is<JsonObjectConst>()) {
         if (!isValidStartupAction(incoming["startup"].as<JsonObjectConst>())) {
-            Logger::log(I18n::pick("Import rejected: invalid startup action.", "Importacion rechazada: accion de arranque invalida.", "Import odrzucony: nieprawidlowa akcja startowa."));
+            Logger::log(I18n::pick("Import rejected: invalid startup action.", "Importación rechazada: acción de arranque inválida.", "Import odrzucony: nieprawidlowa akcja startowa."));
             return false;
         }
 
@@ -957,13 +957,13 @@ bool CommandManager::importCommandsAndMappingsJson(const String& json) {
 
         if (importedStartup.type == "command" &&
             !incoming["commands"][importedStartup.target].is<JsonObjectConst>()) {
-            Logger::log(I18n::pick("Import rejected: startup command missing.", "Importacion rechazada: falta el comando de arranque.", "Import odrzucony: brak komendy startowej."));
+            Logger::log(I18n::pick("Import rejected: startup command missing.", "Importación rechazada: falta el comando de arranque.", "Import odrzucony: brak komendy startowej."));
             return false;
         }
 
         if (importedStartup.type == "sequence" &&
             !incoming["sequences"][importedStartup.target].is<JsonObjectConst>()) {
-            Logger::log(I18n::pick("Import rejected: startup sequence missing.", "Importacion rechazada: falta la secuencia de arranque.", "Import odrzucony: brak sekwencji startowej."));
+            Logger::log(I18n::pick("Import rejected: startup sequence missing.", "Importación rechazada: falta la secuencia de arranque.", "Import odrzucony: brak sekwencji startowej."));
             return false;
         }
     }
@@ -1001,7 +1001,7 @@ bool CommandManager::importCommandsAndMappingsJson(const String& json) {
     for (JsonPairConst kv : incoming["commands"].as<JsonObjectConst>()) {
         IRCommandData command;
         if (!commandFromJson(String(kv.key().c_str()), kv.value(), command)) {
-            Logger::log(String(I18n::pick("Import aborted while rebuilding command ", "Importacion abortada al reconstruir el comando ", "Import przerwany podczas odbudowy komendy ")) + String(kv.key().c_str()));
+            Logger::log(String(I18n::pick("Import aborted while rebuilding command ", "Importación abortada al reconstruir el comando ", "Import przerwany podczas odbudowy komendy ")) + String(kv.key().c_str()));
             _doc.clear();
             _storage.load(_doc);
             ensureSchema();
@@ -1031,7 +1031,7 @@ bool CommandManager::importCommandsAndMappingsJson(const String& json) {
     }
 
     if (!_storage.save(_doc)) {
-        Logger::log(I18n::pick("Import save FAILED.", "Fallo al guardar la importacion.", "Nie udalo sie zapisac importu."));
+        Logger::log(I18n::pick("Import save FAILED.", "Fallo al guardar la importación.", "Nie udalo sie zapisac importu."));
         _doc.clear();
         _storage.load(_doc);
         ensureSchema();

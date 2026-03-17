@@ -114,6 +114,8 @@ const translations = {
     confirm: "Confirm",
     save: "Save",
     invalidStaticNetwork: "Invalid static network",
+    networkStaticRedirect: "Saved. Rebooting. Opening {ip}...",
+    networkDhcpRedirect: "Saved. Rebooting. The IP may change after reconnect.",
     commandNameRequired: "Command name required",
     sequenceNameRequired: "Sequence name required",
     addAtLeastTwoSteps: "Add at least two steps",
@@ -139,25 +141,25 @@ const translations = {
   },
   es: {
     heroEyebrow: "Transceptor IR ESP",
-    heroTitle: "Panel de Control IR Bridge",
+    heroTitle: "Panel de control de IR Bridge",
     refresh: "Refrescar",
-    factoryReset: "Reset de fabrica",
+    factoryReset: "Reset de fábrica",
     tabDashboard: "Resumen",
     tabCommands: "Comandos",
     tabMappings: "Mapeos",
     tabSequences: "Secuencias",
     tabSettings: "Ajustes",
     summaryPanel: "Resumen",
-    connectionInfo: "Conexion",
+    connectionInfo: "Conexión",
     activityInfo: "Bridge",
     memoryInfo: "Memoria",
     liveStatus: "Estado en vivo",
     recordCommand: "Grabar comando",
-    quickSummary: "Resumen rapido",
+    quickSummary: "Resumen rápido",
     deviceLog: "Log del dispositivo",
     auto: "Auto",
     refreshLogs: "Refrescar log",
-    systemSnapshot: "Instantanea del sistema",
+    systemSnapshot: "Instantánea del sistema",
     record: "Grabar",
     commandsTitle: "Comandos",
     simpleMappings: "Mapeos simples",
@@ -167,7 +169,7 @@ const translations = {
     commandSequences: "Secuencias de comandos",
     createSequenceTitle: "Crear secuencia",
     savedSequencesTitle: "Secuencias guardadas",
-    addStep: "Anadir paso",
+    addStep: "Añadir paso",
     clear: "Limpiar",
     saveSequence: "Guardar secuencia",
     appearance: "Apariencia",
@@ -184,7 +186,7 @@ const translations = {
     startupHelp: "Ejecuta un comando guardado o reproduce una secuencia guardada al arrancar.",
     networking: "Red",
     dhcpMode: "DHCP",
-    staticMode: "Estatica",
+    staticMode: "Estática",
     saveNetwork: "Guardar red",
     backup: "Copia",
     exportJson: "Exportar JSON",
@@ -193,34 +195,34 @@ const translations = {
     exportMappings: "Solo mapeos",
     exportSequences: "Solo secuencias",
     importJson: "Importar JSON",
-    backupHelp: "Puedes exportar todo o solo una seccion. La importacion espera una copia completa.",
+    backupHelp: "Puedes exportar todo o solo una sección. La importación espera una copia completa.",
     commandNamePlaceholder: "Nombre del comando",
     sequenceNamePlaceholder: "Nombre de la secuencia",
     timeoutPlaceholder: "Timeout ms",
     loading: "Cargando...",
     idle: "En espera.",
-    idleLastReceived: "En espera. Ultimo recibido: {value}",
-    waitingForSignal: 'Esperando senal para "{name}" ({seconds}s restantes)',
+    idleLastReceived: "En espera. Último recibido: {value}",
+    waitingForSignal: 'Esperando señal para "{name}" ({seconds}s restantes)',
     none: "ninguno",
-    yes: "Si",
+    yes: "Sí",
     no: "No",
     ip: "IP",
-    networkMode: "Modo de direccion",
+    networkMode: "Modo de dirección",
     heap: "Heap",
-    maxBlock: "Bloque max",
-    fragment: "Fragmentacion",
+    maxBlock: "Bloque máximo",
+    fragment: "Fragmentación",
     recording: "Grabando",
-    lastTarget: "Ultimo destino",
-    lastSequence: "Ultima secuencia",
+    lastTarget: "Último destino",
+    lastSequence: "Última secuencia",
     commandsCount: "Comandos: {count}",
     mappingsCount: "Mapeos: {count}",
     sequencesCount: "Secuencias: {count}",
-    lastMappedTarget: "Ultimo destino mapeado: {value}",
+    lastMappedTarget: "Último destino mapeado: {value}",
     noCommandsStored: "No hay comandos guardados.",
     noMappingsStored: "No hay mapeos guardados.",
     noSequencesStored: "No hay secuencias guardadas.",
     noStepsSelected: "No hay pasos seleccionados.",
-    noTestYet: "Sin pruebas todavia.",
+    noTestYet: "Sin pruebas todavía.",
     from: "Origen",
     to: "Destino",
     sequenceSteps: "Secuencia",
@@ -243,25 +245,27 @@ const translations = {
     renameMessage: 'Elige un nuevo nombre para "{name}".',
     renamePlaceholder: "Nuevo nombre del comando",
     deleteCommandTitle: "Borrar comando",
-    deleteCommandMessage: 'Borrar "{name}" y eliminar sus mapeos y secuencias relacionadas?',
+    deleteCommandMessage: '¿Borrar "{name}" y eliminar sus mapeos y secuencias relacionadas?',
     deleteSequenceTitle: "Borrar secuencia",
-    deleteSequenceMessage: 'Borrar la secuencia "{name}"?',
-    factoryTitle: "Reset de fabrica",
-    factoryMessage: "Formatear la memoria del dispositivo y borrar comandos, mapeos, secuencias, accion de arranque y configuracion de red?",
+    deleteSequenceMessage: '¿Borrar la secuencia "{name}"?',
+    factoryTitle: "Reset de fábrica",
+    factoryMessage: "¿Formatear la memoria del dispositivo y borrar comandos, mapeos, secuencias, acción de arranque y configuración de red?",
     cancel: "Cancelar",
     confirm: "Confirmar",
     save: "Guardar",
-    invalidStaticNetwork: "Red estatica invalida",
+    invalidStaticNetwork: "Red estática inválida",
+    networkStaticRedirect: "Guardado. Reiniciando. Abriendo {ip}...",
+    networkDhcpRedirect: "Guardado. Reiniciando. La IP puede cambiar tras reconectar.",
     commandNameRequired: "Hace falta el nombre del comando",
     sequenceNameRequired: "Hace falta el nombre de la secuencia",
-    addAtLeastTwoSteps: "Anade al menos dos pasos",
+    addAtLeastTwoSteps: "Añade al menos dos pasos",
     targetRequired: "Hace falta el comando objetivo",
     timeoutRange: "El timeout debe estar entre 100 y 5000 ms",
-    maxSteps: "Maximo 8 pasos",
+    maxSteps: "Máximo 8 pasos",
     noSourceSelected: "No hay origen seleccionado",
     mappingTargetRequired: "No hay destino seleccionado",
     mappingDifferentCommands: "Origen y destino deben ser distintos",
-    mappingCommandsUnavailable: "Los comandos todavia no estan cargados",
+    mappingCommandsUnavailable: "Los comandos todavía no están cargados",
     startupConfigured: "Arranque: {value}",
     startupDisabled: "Desactivado",
     startupPending: "Pendiente",
@@ -390,6 +394,8 @@ const translations = {
     confirm: "Potwierdz",
     save: "Zapisz",
     invalidStaticNetwork: "Nieprawidlowa siec statyczna",
+    networkStaticRedirect: "Zapisano. Restart. Otwieram {ip}...",
+    networkDhcpRedirect: "Zapisano. Restart. Adres IP moze sie zmienic po ponownym polaczeniu.",
     commandNameRequired: "Wymagana nazwa komendy",
     sequenceNameRequired: "Wymagana nazwa sekwencji",
     addAtLeastTwoSteps: "Dodaj co najmniej dwa kroki",
@@ -1360,6 +1366,21 @@ function toggleNetworkFields() {
   $("netSubnet").disabled = disabled;
 }
 
+function handleNetworkReboot(mode, ip) {
+  clearTimeout(state.statusTimer);
+  clearTimeout(state.logsTimer);
+
+  if (mode === "static" && isIPv4(ip)) {
+    showToast(t("networkStaticRedirect", { ip }));
+    setTimeout(() => {
+      window.location.assign(`http://${ip}/`);
+    }, 3200);
+    return;
+  }
+
+  showToast(t("networkDhcpRedirect"));
+}
+
 async function saveCommand(name, button) {
   try {
     setBusy(button, true);
@@ -1573,7 +1594,16 @@ async function saveNetwork(button) {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: formBody({ mode, ip, gateway, subnet })
     });
+
+    state.networkMode = mode;
+    $("netMode").value = mode;
+    $("netIP").value = ip;
+    $("netGateway").value = gateway;
+    $("netSubnet").value = subnet;
+    toggleNetworkFields();
+
     showToast(message);
+    handleNetworkReboot(mode, ip);
   } finally {
     setBusy(button, false);
   }

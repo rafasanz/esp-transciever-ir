@@ -1,8 +1,8 @@
-# ESP Transciever IR
+# ESP Transceiver IR
 
-ESP Transciever IR es un transceptor infrarrojo con interfaz web para aprender comandos IR, guardarlos en memoria, crear mapeos simples, definir secuencias y ejecutar acciones automáticas al arrancar. El proyecto está orientado a `ESP8266` con `WeMos D1 mini` y usa `LittleFS` como almacenamiento persistente.
+ESP Transceiver IR es un transceptor infrarrojo con interfaz web para aprender comandos IR, guardarlos en memoria, crear mapeos simples, definir secuencias y ejecutar acciones automáticas al arrancar. El proyecto está orientado a `ESP8266` con `WeMos D1 mini` y usa `LittleFS` como almacenamiento persistente.
 
-Versión actual del proyecto: `0.8.3`
+Versión actual del proyecto: `0.8.4`
 
 ## Qué hace
 
@@ -12,7 +12,7 @@ Versión actual del proyecto: `0.8.3`
 - Define secuencias de varios comandos de entrada que disparan un comando guardado.
 - Ejecuta un comando o una secuencia automáticamente al arrancar el dispositivo.
 - Expone una interfaz web local para operar todo sin recompilar firmware.
-- Soporta `English`, `Espanol` y `Polski` tanto en frontend como en mensajes del backend.
+- Soporta `English`, `Español` y `Polski` tanto en frontend como en mensajes del backend.
 - Permite exportar e importar backups completos o parciales.
 - Guarda configuración de red `DHCP` o IP estática.
 

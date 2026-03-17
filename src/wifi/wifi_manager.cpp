@@ -59,7 +59,7 @@ void WiFiService::begin() {
         JsonObject net = doc["network"];
 
         if (net["mode"].is<const char*>() && String(net["mode"]) == "static") {
-            Logger::log(I18n::pick("Static mode detected", "Modo estatico detectado", "Wykryto tryb statyczny"));
+            Logger::log(I18n::pick("Static mode detected", "Modo estático detectado", "Wykryto tryb statyczny"));
 
             String ipStr      = net["ip"]      | "";
             String gatewayStr = net["gateway"] | "";
@@ -76,22 +76,22 @@ void WiFiService::begin() {
                     subnet.fromString(subnetStr)) {
 
                     if (WiFi.config(ip, gateway, subnet)) {
-                        Logger::log(I18n::pick("Static IP applied", "IP estatica aplicada", "Zastosowano statyczny adres IP"));
+                        Logger::log(I18n::pick("Static IP applied", "IP estática aplicada", "Zastosowano statyczny adres IP"));
                     } else {
                         Logger::log(I18n::pick("WiFi.config FAILED", "WiFi.config FALLO", "WiFi.config NIE POWIODL SIE"));
                     }
 
                 } else {
-                    Logger::log(I18n::pick("Invalid IP format. Ignoring static config.", "Formato IP invalido. Se ignora la configuracion estatica.", "Nieprawidlowy format IP. Ignoruje konfiguracje statyczna."));
+                    Logger::log(I18n::pick("Invalid IP format. Ignoring static config.", "Formato IP inválido. Se ignora la configuración estática.", "Nieprawidlowy format IP. Ignoruje konfiguracje statyczna."));
                 }
             } else {
-                Logger::log(I18n::pick("Static config incomplete. Using DHCP.", "Configuracion estatica incompleta. Se usa DHCP.", "Niepelna konfiguracja statyczna. Uzywam DHCP."));
+                Logger::log(I18n::pick("Static config incomplete. Using DHCP.", "Configuración estática incompleta. Se usa DHCP.", "Niepelna konfiguracja statyczna. Uzywam DHCP."));
             }
         } else {
             Logger::log(I18n::pick("DHCP mode", "Modo DHCP", "Tryb DHCP"));
         }
     } else {
-        Logger::log(I18n::pick("No network config found. Using DHCP.", "No se encontro configuracion de red. Se usa DHCP.", "Nie znaleziono konfiguracji sieci. Uzywam DHCP."));
+        Logger::log(I18n::pick("No network config found. Using DHCP.", "No se encontró configuración de red. Se usa DHCP.", "Nie znaleziono konfiguracji sieci. Uzywam DHCP."));
     }
 
     captureDeviceState("not_connected");

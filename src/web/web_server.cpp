@@ -216,7 +216,7 @@ void WebServerService::setupRoutes() {
         String language = request->getParam("language", true)->value();
         language.trim();
         if (!commandManager.setLanguage(language)) {
-            sendText(request, 400, "Invalid language", "Idioma invalido", "Nieprawidlowy jezyk");
+            sendText(request, 400, "Invalid language", "Idioma inválido", "Nieprawidlowy jezyk");
             return;
         }
 
@@ -257,7 +257,7 @@ void WebServerService::setupRoutes() {
         }
 
         bridgeService.refreshStartupAction();
-        sendText(request, 200, "Startup action saved", "Accion de arranque guardada", "Zapisano akcje startowa");
+        sendText(request, 200, "Startup action saved", "Acción de arranque guardada", "Zapisano akcje startowa");
     });
 
     server.on("/api/network", HTTP_POST, [this](AsyncWebServerRequest* request) {
@@ -277,7 +277,7 @@ void WebServerService::setupRoutes() {
 
         if (mode == "static" &&
             (!isValidIpv4(ip) || !isValidIpv4(gateway) || !isValidIpv4(subnet))) {
-            sendText(request, 400, "Invalid static network", "Red estatica invalida", "Nieprawidlowa siec statyczna");
+            sendText(request, 400, "Invalid static network", "Red estática inválida", "Nieprawidlowa siec statyczna");
             return;
         }
 
@@ -287,7 +287,7 @@ void WebServerService::setupRoutes() {
         }
 
         pendingReboot = true;
-        sendText(request, 200, "Saved. Device will reboot.", "Guardado. El dispositivo se reiniciara.", "Zapisano. Urzadzenie uruchomi sie ponownie.");
+        sendText(request, 200, "Saved. Device will reboot.", "Guardado. El dispositivo se reiniciará.", "Zapisano. Urzadzenie uruchomi sie ponownie.");
     });
 
     server.on("/api/record", HTTP_POST, [this](AsyncWebServerRequest* request) {
@@ -300,11 +300,11 @@ void WebServerService::setupRoutes() {
         name.trim();
 
         if (!bridgeService.startRecording(name)) {
-            sendText(request, 400, "Invalid name", "Nombre invalido", "Nieprawidlowa nazwa");
+            sendText(request, 400, "Invalid name", "Nombre inválido", "Nieprawidlowa nazwa");
             return;
         }
 
-        sendText(request, 200, "Recording started", "Grabacion iniciada", "Rozpoczeto nagrywanie");
+        sendText(request, 200, "Recording started", "Grabación iniciada", "Rozpoczeto nagrywanie");
     });
 
     server.on("/api/delete", HTTP_POST, [this](AsyncWebServerRequest* request) {
@@ -327,7 +327,7 @@ void WebServerService::setupRoutes() {
 
     server.on("/api/rename", HTTP_POST, [this](AsyncWebServerRequest* request) {
         if (!request->hasParam("old_name", true) || !request->hasParam("new_name", true)) {
-            sendText(request, 400, "Missing params", "Faltan parametros", "Brak parametrow");
+            sendText(request, 400, "Missing params", "Faltan parámetros", "Brak parametrow");
             return;
         }
 
@@ -347,7 +347,7 @@ void WebServerService::setupRoutes() {
 
     server.on("/api/map", HTTP_POST, [this](AsyncWebServerRequest* request) {
         if (!request->hasParam("source", true) || !request->hasParam("target", true)) {
-            sendText(request, 400, "Missing params", "Faltan parametros", "Brak parametrow");
+            sendText(request, 400, "Missing params", "Faltan parámetros", "Brak parametrow");
             return;
         }
 
@@ -390,7 +390,7 @@ void WebServerService::setupRoutes() {
         if (!request->hasParam("name", true) ||
             !request->hasParam("target", true) ||
             !request->hasParam("steps", true)) {
-            sendText(request, 400, "Missing params", "Faltan parametros", "Brak parametrow");
+            sendText(request, 400, "Missing params", "Faltan parámetros", "Brak parametrow");
             return;
         }
 
@@ -405,7 +405,7 @@ void WebServerService::setupRoutes() {
         JsonDocument stepsDoc;
         if (deserializeJson(stepsDoc, request->getParam("steps", true)->value()) != DeserializationError::Ok ||
             !stepsDoc.is<JsonArrayConst>()) {
-            sendText(request, 400, "Invalid steps", "Pasos invalidos", "Nieprawidlowe kroki");
+            sendText(request, 400, "Invalid steps", "Pasos inválidos", "Nieprawidlowe kroki");
             return;
         }
 
@@ -465,7 +465,7 @@ void WebServerService::setupRoutes() {
             !request->hasParam("protocol", true) ||
             !request->hasParam("value", true) ||
             !request->hasParam("bits", true)) {
-            sendText(request, 400, "Missing params", "Faltan parametros", "Brak parametrow");
+            sendText(request, 400, "Missing params", "Faltan parámetros", "Brak parametrow");
             return;
         }
 
@@ -545,7 +545,7 @@ void WebServerService::setupRoutes() {
             request->_tempObject = nullptr;
 
             if (!commandManager.importCommandsAndMappingsJson(*body)) {
-                sendText(request, 400, "Import failed", "Fallo en la importacion", "Import nie powiodl sie");
+                sendText(request, 400, "Import failed", "Fallo en la importación", "Import nie powiodl sie");
                 return;
             }
 
@@ -568,12 +568,12 @@ void WebServerService::setupRoutes() {
 
     server.on("/api/factory", HTTP_POST, [this](AsyncWebServerRequest* request) {
         if (!commandManager.factoryReset()) {
-            sendText(request, 500, "Factory reset failed", "Fallo en el reseteo de fabrica", "Reset fabryczny nie udal sie");
+            sendText(request, 500, "Factory reset failed", "Fallo en el reseteo de fábrica", "Reset fabryczny nie udal sie");
             return;
         }
 
         pendingReboot = true;
-        sendText(request, 200, "Factory reset. Rebooting...", "Reseteo de fabrica. Reiniciando...", "Reset fabryczny. Ponowne uruchamianie...");
+        sendText(request, 200, "Factory reset. Rebooting...", "Reseteo de fábrica. Reiniciando...", "Reset fabryczny. Ponowne uruchamianie...");
     });
 
     server.on("/api/logs", HTTP_GET, [](AsyncWebServerRequest* request) {

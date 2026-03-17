@@ -33,6 +33,7 @@ extern bool pendingReboot;
 unsigned long lastMemoryCheck = 0;
 const unsigned long memoryInterval = 30000;
 const uint32_t MIN_HEAP_WARNING = 12000;
+const unsigned long rebootGracePeriod = 2200;
 
 void setup() {
     Serial.begin(SERIAL_BAUD);
@@ -72,7 +73,7 @@ void loop() {
     bridgeService.process();
 
     if (pendingReboot) {
-        delay(1000);
+        delay(rebootGracePeriod);
         ESP.restart();
     }
 }
@@ -90,11 +91,11 @@ void handleSerialCommands() {
         name.trim();
 
         if (!bridgeService.startRecording(name)) {
-            Logger::log(I18n::pick("Invalid name.", "Nombre invalido.", "Nieprawidlowa nazwa."));
+            Logger::log(I18n::pick("Invalid name.", "Nombre inválido.", "Nieprawidlowa nazwa."));
             return;
         }
 
-        Logger::log(I18n::pick("Waiting for IR signal (15s timeout)...", "Esperando senal IR (15 s de timeout)...", "Oczekiwanie na sygnal IR (timeout 15 s)..."));
+        Logger::log(I18n::pick("Waiting for IR signal (15s timeout)...", "Esperando señal IR (timeout de 15 s)...", "Oczekiwanie na sygnal IR (timeout 15 s)..."));
         return;
     }
 
@@ -155,8 +156,8 @@ void handleSerialCommands() {
 }
 
 void logBootDiagnostics() {
-    Logger::log(String(I18n::pick("Flash chip size: ", "Tamano de flash del chip: ", "Rozmiar flash ukladu: ")) + String(ESP.getFlashChipSize()));
-    Logger::log(String(I18n::pick("Real flash size: ", "Tamano real de flash: ", "Rzeczywisty rozmiar flash: ")) + String(ESP.getFlashChipRealSize()));
+    Logger::log(String(I18n::pick("Flash chip size: ", "Tamaño de flash del chip: ", "Rozmiar flash ukladu: ")) + String(ESP.getFlashChipSize()));
+    Logger::log(String(I18n::pick("Real flash size: ", "Tamaño real de flash: ", "Rzeczywisty rozmiar flash: ")) + String(ESP.getFlashChipRealSize()));
 
     FSInfo info;
     if (LittleFS.info(info)) {
@@ -165,6 +166,6 @@ void logBootDiagnostics() {
     }
 
     Logger::log(String(I18n::pick("Free heap: ", "Heap libre: ", "Wolny heap: ")) + String(ESP.getFreeHeap()));
-    Logger::log(String(I18n::pick("Max alloc heap: ", "Heap maximo asignable: ", "Maksymalny przydzial heap: ")) + String(ESP.getMaxFreeBlockSize()));
-    Logger::log(String(I18n::pick("Heap fragmentation: ", "Fragmentacion del heap: ", "Fragmentacja heap: ")) + String(ESP.getHeapFragmentation()) + "%");
+    Logger::log(String(I18n::pick("Max alloc heap: ", "Heap máximo asignable: ", "Maksymalny przydzial heap: ")) + String(ESP.getMaxFreeBlockSize()));
+    Logger::log(String(I18n::pick("Heap fragmentation: ", "Fragmentación del heap: ", "Fragmentacja heap: ")) + String(ESP.getHeapFragmentation()) + "%");
 }

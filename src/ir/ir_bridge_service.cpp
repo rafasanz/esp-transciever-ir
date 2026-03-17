@@ -46,7 +46,7 @@ bool IRBridgeService::startRecording(const String& name) {
     _recordMode = true;
     _recordName = cleanName;
     _recordStartedAt = millis();
-    Logger::log(String(I18n::pick("Recording started: ", "Grabacion iniciada: ", "Rozpoczeto nagrywanie: ")) + _recordName);
+    Logger::log(String(I18n::pick("Recording started: ", "Grabación iniciada: ", "Rozpoczeto nagrywanie: ")) + _recordName);
     return true;
 }
 
@@ -288,7 +288,7 @@ void IRBridgeService::process() {
     const uint32_t now = millis();
 
     if (isRecordingExpired()) {
-        Logger::log(I18n::pick("Recording timeout.", "Tiempo de grabacion agotado.", "Przekroczono czas nagrywania."));
+        Logger::log(I18n::pick("Recording timeout.", "Tiempo de grabación agotado.", "Przekroczono czas nagrywania."));
         finishRecording();
     }
 
