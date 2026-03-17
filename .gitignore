@@ -1,0 +1,4 @@
+.pio/
+.vscode/
+monitor_*.txt
+*.tmp
